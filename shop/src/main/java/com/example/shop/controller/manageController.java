@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -123,8 +127,42 @@ public class manageController {
         if(StringUtils.isNotEmpty(check)){
             return Result.error(check);
         }
-        
-        return null;
+        int i = materialService.insertMaterial(material);
+        if(i == 0){
+            return Result.error("商品添加异常");
+        }
+        return Result.succ();
+    }
+
+    @PostMapping("/updateMaterial")
+    public Result updateMaterial(@RequestBody Material material){
+        String check = checkMaterial(material);
+        if(StringUtils.isNotEmpty(check)){
+            return Result.error(check);
+        }
+        int i = materialService.updateMaterial(material);
+        if(i == 0){
+            return Result.error("商品更新异常");
+        }
+        return Result.succ();
+    }
+
+    @PostMapping("/upload")
+    public Result uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            String originalFilename = file.getOriginalFilename(); // 获取上传文件的原始文件名
+            String suffix = originalFilename.substring(originalFilename.lastIndexOf(".")); // 获取文件后缀名
+            String fileName = UUID.randomUUID().toString() + suffix; // 生成唯一文件名
+            String savePath = "static/images/" + fileName; // 保存路径
+
+            File saveFile = new File(savePath);
+            file.transferTo(saveFile); // 保存文件
+
+            return Result.succ();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.error("文件上传失败");
+        }
     }
 
     private String checkMaterial(Material material){

@@ -18,4 +18,6 @@ public interface MaterialService {
     Map<String,Object> getHome();
 
     int insertMaterial(Material material);
+
+    int updateMaterial(Material material);
 }

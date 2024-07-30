@@ -6,6 +6,7 @@ import com.example.shop.entity.Material;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,11 @@ public interface MaterialDao {
     @SelectProvider(type = MaterialDaoProvider.class, method = "getSpuIdMax")
     Map<String,Integer> getSpuIdMax();
 
-    @Insert("")
+    @Insert("insert into material(spuId,thumb,title,price,originPrice,type,tabType,createTime,updateTime,dr,stock,images,imagesDetails) \n" +
+            "vaules (#{spuId},#{thumb},#{title},#{price},#{originPrice},#{type},#{tabType},#{createTime},#{updateTime},#{dr},#{stock},#{images},#{imagesDetails}")
     int addMaterial(Material material);
+
+    @Update("update material set thumb=#{thumb},title=#{title},price=#{price},originPrice=#{originPrice},type=#{type},tabType=#{tabType},\n" +
+            "createTime=#{createTime},updateTime=#{updateTime},dr=#{dr},stock=#{stock},images=#{images},imagesDetails=#{imagesDetails} where spuId=#{spuId}")
+    int updateMaterial(Material material);
 }

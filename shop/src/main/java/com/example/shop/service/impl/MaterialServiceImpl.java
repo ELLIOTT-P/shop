@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Date;
 
 @Service
 public class MaterialServiceImpl implements MaterialService {
@@ -16,7 +19,7 @@ public class MaterialServiceImpl implements MaterialService {
     private MaterialDao materialDao;
 
     @Override
-    public List<Map<String, Object>> getMaterialList(Integer tabType, Integer pageNum, Integer pageSize,Integer dr) {
+    public List<Map<String, Object>> getMaterialList(Integer tabType, Integer pageNum, Integer pageSize, Integer dr) {
         List<Map<String, Object>> list = materialDao.getMaterialList(tabType,pageNum,pageSize,dr);
         List<Map<String, Object>> listResult = new ArrayList<>();
         if(list != null && list.size() > 0){
@@ -105,6 +108,13 @@ public class MaterialServiceImpl implements MaterialService {
         }
         material.setDr(1);
         material.setCreateTime(new Date());
-        return 0;
+        return materialDao.addMaterial(material);
+    }
+
+    @Override
+    @Transactional
+    public int updateMaterial(Material material) {
+        material.setUpdateTime(new Date());
+        return materialDao.updateMaterial(material);
     }
 }
