@@ -2,6 +2,8 @@ package com.example.shop.dao;
 
 import com.example.shop.dao.provider.MaterialDaoProvider;
 import com.example.shop.dao.provider.TestDaoProvider;
+import com.example.shop.entity.Material;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.SelectProvider;
 
@@ -22,4 +24,10 @@ public interface MaterialDao {
 
     @SelectProvider(type = MaterialDaoProvider.class, method = "getTableType")
     List<Map<String, Object>> getTableType(Integer dr);
+
+    @SelectProvider(type = MaterialDaoProvider.class, method = "getSpuIdMax")
+    Map<String,Integer> getSpuIdMax();
+
+    @Insert("")
+    int addMaterial(Material material);
 }

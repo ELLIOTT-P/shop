@@ -1,14 +1,14 @@
 package com.example.shop.service.impl;
 
 import com.example.shop.dao.MaterialDao;
+import com.example.shop.entity.Material;
 import com.example.shop.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.beans.Transient;
+import java.util.*;
 
 @Service
 public class MaterialServiceImpl implements MaterialService {
@@ -93,5 +93,18 @@ public class MaterialServiceImpl implements MaterialService {
             resultMap.put("tabList",tabList);
         }
         return resultMap;
+    }
+
+    @Override
+    @Transactional
+    public int insertMaterial(Material material) {
+        Map<String, Integer> spuIdMax = materialDao.getSpuIdMax();
+        if(spuIdMax != null){
+            Integer spuId = spuIdMax.get("spuId");
+            material.setSpuId(spuId++);
+        }
+        material.setDr(1);
+        material.setCreateTime(new Date());
+        return 0;
     }
 }

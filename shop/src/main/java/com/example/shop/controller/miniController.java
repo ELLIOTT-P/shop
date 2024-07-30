@@ -31,7 +31,7 @@ public class miniController {
      */
     @GetMapping("getMaterialList")
     public Result getMaterialList(
-            @RequestParam(required = false, defaultValue = "1") Integer tabType,
+            @RequestParam(required = false) Integer tabType,
             @RequestParam(required = false, defaultValue = "1") Integer pageNum,
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             @RequestParam(required = false, defaultValue = "1") Integer dr
@@ -46,7 +46,7 @@ public class miniController {
      * @return
      */
     @GetMapping("getMaterialById")
-    public Result getMaterialById(@RequestParam(required = true, defaultValue = "1") Integer spuId){
+    public Result getMaterialById(@RequestParam(required = true) Integer spuId){
         Map<String, Object> map = materialService.getMaterialById(spuId);
         return Result.succ(map);
     }

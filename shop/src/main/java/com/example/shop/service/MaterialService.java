@@ -1,5 +1,7 @@
 package com.example.shop.service;
 
+import com.example.shop.entity.Material;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,4 +16,6 @@ public interface MaterialService {
     List<Map<String,Object>> getTableType(Integer dr);
 
     Map<String,Object> getHome();
+
+    int insertMaterial(Material material);
 }

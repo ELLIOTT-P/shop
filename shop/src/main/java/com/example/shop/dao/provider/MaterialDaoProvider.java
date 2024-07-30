@@ -5,13 +5,14 @@ import com.example.shop.utils.SqlUtils;
 public class MaterialDaoProvider {
 
     public String getMaterialList(Integer tabType, Integer pageNum, Integer pageSize,Integer dr){
-        String sql = "select * from material";
+        String sql = "select * from material where 1=1";
         if(tabType != null){
-            sql += " where and tabType="+tabType;
+            sql += " and tabType="+tabType;
         }
         if(dr != null){
-            sql += " dr="+dr;
+            sql += " and dr="+dr;
         }
+        sql += " order by id desc";
         sql += SqlUtils.getPageLimit(pageNum,pageSize);
         return sql;
     }
@@ -36,6 +37,11 @@ public class MaterialDaoProvider {
             sql += " and dr="+dr;
         }
         sql += " order by sort asc";
+        return sql;
+    }
+
+    public String getSpuIdMax(){
+        String sql = "select spuId from material order by spuId desc limit 1";
         return sql;
     }
 }
