@@ -4,7 +4,9 @@ spring:
     name: shop
 
   datasource:
-    url: jdbc:mysql://120.27.248.163:3306/mysql_dev?serverTimezone=GMT
+    url: jdbc:mysql://120.27.248.163:3306/mysql_dev?serverTimezone=GMT #服务器外网
+    #url: jdbc:mysql://172.16.219.186:3306/mysql_dev?serverTimezone=GMT #服务器内网
+    #url: jdbc:mysql://127.0.0.1:3306/mysql_dev?serverTimezone=GMT
     username: root
     password: QWEr105521+
     driver-class-name: com.mysql.cj.jdbc.Driver

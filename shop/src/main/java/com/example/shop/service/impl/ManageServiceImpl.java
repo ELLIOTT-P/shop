@@ -21,6 +21,7 @@ public class ManageServiceImpl implements ManageService {
 
     @Override
     public int insertManageUser(ManageUser manageUser) {
+
         return manageDao.insertUser(manageUser);
     }
 }
