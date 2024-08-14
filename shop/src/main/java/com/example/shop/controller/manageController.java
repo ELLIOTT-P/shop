@@ -20,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -123,6 +120,28 @@ public class manageController {
      */
     @PostMapping("/addMaterial")
     public Result addMaterial(@RequestBody Material material){
+        if(material != null){
+            String[] imagesDetailsArr = material.getImagesDetailsArr();
+            String imagesDetails = "";
+            for(int i = 0 ; i < imagesDetailsArr.length ; i++){
+                if(i < imagesDetailsArr.length - 1){
+                    imagesDetails += imagesDetailsArr[i]+",";
+                }else{
+                    imagesDetails += imagesDetailsArr[i];
+                }
+            }
+            material.setImagesDetails(imagesDetails);
+            String[] imagesArr = material.getImagesArr();
+            String images = "";
+            for(int i = 0 ; i < imagesArr.length ; i++){
+                if(i < imagesArr.length - 1){
+                    images += imagesArr[i]+",";
+                }else{
+                    images += imagesArr[i];
+                }
+            }
+            material.setImages(images);
+        }
         String check = checkMaterial(material);
         if(StringUtils.isNotEmpty(check)){
             return Result.error(check);
@@ -136,6 +155,28 @@ public class manageController {
 
     @PostMapping("/updateMaterial")
     public Result updateMaterial(@RequestBody Material material){
+        if(material != null){
+            String[] imagesDetailsArr = material.getImagesDetailsArr();
+            String imagesDetails = "";
+            for(int i = 0 ; i < imagesDetailsArr.length ; i++){
+                if(i < imagesDetailsArr.length - 1){
+                    imagesDetails += imagesDetailsArr[i]+",";
+                }else{
+                    imagesDetails += imagesDetailsArr[i];
+                }
+            }
+            material.setImagesDetails(imagesDetails);
+            String[] imagesArr = material.getImagesArr();
+            String images = "";
+            for(int i = 0 ; i < imagesArr.length ; i++){
+                if(i < imagesArr.length - 1){
+                    images += imagesArr[i]+",";
+                }else{
+                    images += imagesArr[i];
+                }
+            }
+            material.setImages(images);
+        }
         String check = checkMaterial(material);
         if(StringUtils.isNotEmpty(check)){
             return Result.error(check);
@@ -153,12 +194,14 @@ public class manageController {
             String originalFilename = file.getOriginalFilename(); // 获取上传文件的原始文件名
             String suffix = originalFilename.substring(originalFilename.lastIndexOf(".")); // 获取文件后缀名
             String fileName = UUID.randomUUID().toString() + suffix; // 生成唯一文件名
-            String savePath = "static/images/" + fileName; // 保存路径
-
+            String savePath = "/static/images/" + fileName; // 保存路径
+            log.info("文件路径："+savePath);
             File saveFile = new File(savePath);
             file.transferTo(saveFile); // 保存文件
-
-            return Result.succ();
+            String responUrl = "http://120.27.248.163:8089/images/"+fileName;
+            Map<String,String> map = new HashMap<>();
+            map.put("responUrl",responUrl);
+            return Result.succ(map);
         } catch (IOException e) {
             e.printStackTrace();
             return Result.error("文件上传失败");

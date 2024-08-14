@@ -30,7 +30,7 @@ public interface MaterialDao {
     Map<String,Integer> getSpuIdMax();
 
     @Insert("insert into material(spuId,thumb,title,price,originPrice,type,tabType,createTime,updateTime,dr,stock,images,imagesDetails) \n" +
-            "vaules (#{spuId},#{thumb},#{title},#{price},#{originPrice},#{type},#{tabType},#{createTime},#{updateTime},#{dr},#{stock},#{images},#{imagesDetails}")
+            "values (#{spuId},#{thumb},#{title},#{price},#{originPrice},#{type},#{tabType},#{createTime},#{updateTime},#{dr},#{stock},#{images},#{imagesDetails})")
     int addMaterial(Material material);
 
     @Update("update material set thumb=#{thumb},title=#{title},price=#{price},originPrice=#{originPrice},type=#{type},tabType=#{tabType},\n" +

@@ -36,4 +36,8 @@ public class Material implements Serializable {
     private String images;//商品详情轮播
 
     private String imagesDetails;//商品详情图
+
+    private String[] imagesDetailsArr;
+
+    private String[] imagesArr;
 }
